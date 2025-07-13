@@ -1,19 +1,20 @@
 // server.js - Main server file for the MERN blog application
 
 // Import required modules
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const path = require('path');
+import express, { json, urlencoded } from 'express';
+import { static as expressStatic } from 'express';
+import { connect } from 'mongoose';
+import cors from 'cors';
+import { config } from 'dotenv';
+import { join } from 'path';
 
 // Import routes
-const postRoutes = require('./routes/posts');
-const categoryRoutes = require('./routes/categories');
-const authRoutes = require('./routes/auth');
+import postRoutes from './routes/posts';
+import categoryRoutes from './routes/categories';
+import authRoutes from './routes/auth';
 
 // Load environment variables
-dotenv.config();
+config();
 
 // Initialize Express app
 const app = express();
@@ -21,11 +22,10 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
-// Serve uploaded files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', expressStatic(join(__dirname, 'uploads')));
 
 // Log requests in development mode
 if (process.env.NODE_ENV === 'development') {
@@ -55,8 +55,7 @@ app.use((err, req, res, next) => {
 });
 
 // Connect to MongoDB and start server
-mongoose
-  .connect(process.env.MONGODB_URI)
+connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Connected to MongoDB');
     app.listen(PORT, () => {
@@ -75,4 +74,4 @@ process.on('unhandledRejection', (err) => {
   process.exit(1);
 });
 
-module.exports = app; 
+export default app; 
