@@ -1,19 +1,12 @@
 import React from "react";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-} from "@/components/ui/navigation-menu"
+import Container from 'react-bootstrap/Container';
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import BlogCard from '@/components/ui/blogCard';
+import Footer from "@/components/ui/footer";
+import { Link } from "react-router-dom";
 
 function LandingPage() {
      const sample = [{
@@ -35,36 +28,30 @@ function LandingPage() {
     category: "Economy"
   },
   ]
+
  return (
   <div>
-    <div className='w-full'>
-      <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>MyBlog</NavigationMenuItem>
-        <NavigationMenuLink>Home</NavigationMenuLink>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <NavigationMenuLink>Tech</NavigationMenuLink>
-            <NavigationMenuLink>Socials</NavigationMenuLink>
-            <NavigationMenuLink>Economy</NavigationMenuLink>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuLink>Contact Us</NavigationMenuLink>
-      </NavigationMenuList>
-    </NavigationMenu>
-    </div>
-    <div className="container bg-blue-300 dark:bg-blue-600 h-60 flex justify-center items-center flex-col mt-4 w-full">
-      <div >
-        <h1 className='text-3xl font-bold text-gray-800 '>Welcome to MyBlog</h1>
-        <p className='text-gray-600 mt-2'> Explore our different categories</p>
+
+    <Container fluid className="bg-blue-300 h-80 flex flex-col justify-center items-center">
+       <h1 className='text-3xl font-bold text-gray-800 '>Welcome to MyBlog</h1>
+        <p className='text-gray-700 mb-2'> Explore our unique categories</p>
+        <div className='flex justify-center items-center gap-4'>
+        <Input placeholder="Search your blogs here.." className="p-3  focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100" />
+        <Button variant="dark" className="flex items-center gap-2">Search</Button>
       </div>
-      <div className='flex justify-center items-center gap-4 mb-8'>
-        <Input placeholder="Search your blogs here.." className="p-3 w-full max-w-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100" />
-        <Button variant="outline" className="flex items-center gap-2">Search</Button>
+      <div className="mt-7">
+        <span className=" mr-5">
+          <Link to={"/signup"}><Button  className="flex items-center gap-2 bg bg-blue-400 text-bold">Signup</Button></Link>
+        </span>
+        <span>
+          <Link to={"/login"}><Button className="flex items-center gap-2 bg-blue-400">Login</Button></Link>
+        </span>
       </div>
+    </Container>
+    <div className="flex flex-col justify-center items-center mt-6">
+       <h1 className="flex items-center text-s">All Blogs</h1>
     </div>
-    <div>
+    <div className="p-2">
       <Row xs={1} md={3} className="g-4">
         {sample.map((item, idx) => (
           <Col key={idx}>
@@ -72,7 +59,10 @@ function LandingPage() {
           </Col>
         ))}
       </Row>
-    </div>  
+    </div> 
+    <div className="mt-8">
+      <Footer />
+    </div> 
    </div>
   )
 }

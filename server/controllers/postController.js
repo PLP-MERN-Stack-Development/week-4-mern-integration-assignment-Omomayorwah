@@ -26,10 +26,8 @@ exports.updatePost = async (req, res) => {
         if (!post) {
             return res.status(404).json({ message: "Post not found" });
         }
-
-        // Check if user owns the post or is admin
-        if (post.owner.toString() !== req.user.id && req.user.role !== "admin") {
-            return res.status(403).json({ message: "Not authorized to update this post" });
+        if (post.owner.toString() !== req.user.id) {
+            return res.status(403).json({ message: "You are not authorized to update this post" });
         }
 
         const updatedPost = await Post.findByIdAndUpdate(
@@ -53,9 +51,8 @@ exports.deletePost = async (req, res) => {
             return res.status(404).json({ message: "Post not found" });
         }
 
-        // Check if user owns the post or is admin
-        if (post.owner.toString() !== req.user.id && req.user.role !== "admin") {
-            return res.status(403).json({ message: "Not authorized to delete this post" });
+        if (post.owner.toString() !== req.user.id) {
+            return res.status(403).json({ message: "You are not authorized to delete this" });
         }
 
         await Post.findByIdAndDelete(req.params.id);
